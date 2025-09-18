@@ -1,1 +1,1 @@
-# Database files will be stored here 
+Database notes will go here
