@@ -1,1 +1,202 @@
-<h1>Welcome to hireon</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hireon – Govt & Private Jobs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background: #004aad;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover { text-decoration: underline; }
+    .hero {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #004aad, #0077ff);
+      color: white;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0 20px;
+    }
+    .tab {
+      padding: 12px 25px;
+      cursor: pointer;
+      border-radius: 20px;
+      margin: 0 10px;
+      font-weight: bold;
+      background: #eee;
+      transition: 0.3s;
+    }
+    .tab.active { background: #004aad; color: white; }
+    .tab:hover { background: #ddd; }
+    .content {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .content.active { display: block; opacity: 1; }
+    .job-card {
+      background: white;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .job-card h3 { margin: 0 0 10px; color: #004aad; }
+    .job-card p { margin: 5px 0; }
+    .apply-btn {
+      background: #004aad;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .apply-btn:hover { background: #003080; }
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    /* Notification popup */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: -400px;
+      background: #004aad;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-size: 14px;
+      font-weight: 500;
+      transition: right 0.6s ease;
+      z-index: 1000;
+    }
+    .notification.show {
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Hireon</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Jobs</a>
+      <a href="#">Practice</a>
+      <a href="#">Profile</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Stay Ahead – Govt & Private Jobs at One Place</h2>
+    <p>Get instant notifications, apply easily, and prepare smartly.</p>
+  </section>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showContent('govt')">Government Jobs</div>
+    <div class="tab" onclick="showContent('private')">Private Jobs</div>
+  </div>
+
+  <!-- Government Jobs -->
+  <div id="govt" class="content active">
+    <div class="job-card">
+      <h3>SSC CGL Exam 2025</h3>
+      <p><strong>Eligibility:</strong> Any Graduate</p>
+      <p><strong>Deadline:</strong> 30th Nov 2025</p>
+      <button class="apply-btn">Apply Now</button>
+    </div>
+    <div class="job-card">
+      <h3>UPSC Civil Services</h3>
+      <p><strong>Eligibility:</strong> Graduate (21–32 yrs)</p>
+      <p><strong>Deadline:</strong> 15th Dec 2025</p>
+      <button class="apply-btn">Apply Now</button>
+    </div>
+  </div>
+
+  <!-- Private Jobs -->
+  <div id="private" class="content">
+    <div class="job-card">
+      <h3>TCS NQT Hiring 2025</h3>
+      <p><strong>Eligibility:</strong> B.Tech / MCA (2025 Batch)</p>
+      <p><strong>Location:</strong> PAN India</p>
+      <button class="apply-btn">Apply Now</button>
+    </div>
+    <div class="job-card">
+      <h3>Infosys System Engineer</h3>
+      <p><strong>Eligibility:</strong> B.E / B.Tech / M.Tech</p>
+      <p><strong>Deadline:</strong> 10th Oct 2025</p>
+      <button class="apply-btn">Apply Now</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Hireon | Hiring is Always ON</p>
+  </footer>
+
+  <!-- Notification div -->
+  <div id="notification" class="notification">New Job Alert!</div>
+
+  <script>
+    function showContent(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      document.querySelector('.tab[onclick="showContent(\''+tab+'\')"]').classList.add('active');
+      document.getElementById(tab).classList.add('active');
+    }
+
+    // Function to show popup notification
+    function showNotification(message) {
+      const notif = document.getElementById("notification");
+      notif.textContent = message;
+      notif.classList.add("show");
+      setTimeout(() => {
+        notif.classList.remove("show");
+      }, 4000);
+    }
+
+    // Simulate job alerts every 10 seconds
+    const alerts = [
+      "🚨 New Govt Job: Railway RRB 2025 notification released!",
+      "💼 Private Job: Wipro Hiring Freshers 2025!",
+      "📢 Govt Job: Banking IBPS PO 2025 out now!",
+      "✨ Private Job: Accenture Campus Drive 2025!"
+    ];
+    let i = 0;
+    setInterval(() => {
+      showNotification(alerts[i % alerts.length]);
+      i++;
+    }, 10000);
+  </script>
+
+</body>
+</html>
