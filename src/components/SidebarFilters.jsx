@@ -11,7 +11,7 @@ import {
   Divider
 } from "@mui/material";
 
-const branches = ["All", "CSE", "ECE", "MECH", "CIVIL"];
+const branches = ["All", "CSE", "ECE", "MECH", "CIVIL","CSE-DS","CSE-AIML",];
 const roleTypes = ["All", "Internship", "Full-time"];
 const workTypes = ["All", "Remote", "Onsite", "Hybrid"];
 
