@@ -1,0 +1,17 @@
+/* src/components/Dashboard.css */
+
+.dashboard-root {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  padding: 12px 16px;
+  min-width: 140px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
