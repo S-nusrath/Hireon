@@ -1,24 +1,13 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/db');
+// models/User.js
+import db from '../db.js';
 
-const User = sequelize.define('User', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  role: {
-    type: DataTypes.ENUM('student', 'recruiter'),
-    defaultValue: 'student'
-  }
-});
+export const findUserByEmail = async (email) => {
+  const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+  return rows[0];
+};
 
-module.exports = User;
+export const createUser = async (name, email, hashedPassword) => {
+  await db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [
+    name, email, hashedPassword
+  ]);
+};
