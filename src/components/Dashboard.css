@@ -1,0 +1,33 @@
+/* src/components/Dashboard.css */
+.dashboard {
+  background-color: #f5f5f5;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard h1 {
+  color: #333;
+}
+/* src/components/Dashboard.css */
+.dashboard-page {
+  display: flex;
+}
+
+.dashboard-main {
+  margin-left: 250px;  /* sidebar width */
+  flex: 1;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-top: 60px;   /* navbar height */
+}
+
+.dashboard-content {
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
