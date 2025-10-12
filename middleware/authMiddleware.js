@@ -109,34 +109,62 @@
 //}
 
 
+// import jwt from "jsonwebtoken";
+
+// export const protect = (req, res, next) => {
+//   let token;
+
+//   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+//     try {
+//       token = req.headers.authorization.split(" ")[1];
+
+//       // Debug messages
+//       console.log("👉 Full Auth Header:", req.headers.authorization);
+//       console.log("👉 Extracted Token:", token);
+
+//       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+//       console.log("👉 Decoded Payload:", decoded);
+
+//       req.user = decoded;
+//       return next();
+//     } catch (error) {
+//       console.error("JWT verify error:", error.message);
+//       return res.status(401).json({ message: "Not authorized, token failed" });
+//     }
+//   }
+
+//   if (!token) {
+//     return res.status(401).json({ message: "Not authorized, no token" });
+//   }
+// };
+
+// export default protect;
+
+
+// middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
+import db from "../config/db.js";
 
-export const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
   let token;
-
-  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-    try {
+  try {
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
       token = req.headers.authorization.split(" ")[1];
-
-      // Debug messages
-      console.log("👉 Full Auth Header:", req.headers.authorization);
-      console.log("👉 Extracted Token:", token);
+      if (!process.env.JWT_SECRET) return res.status(500).json({ message: "JWT secret missing" });
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const [rows] = await db.query("SELECT id, name, email, userRole FROM users WHERE id = ?", [decoded.id]);
+      if (!rows.length) return res.status(401).json({ message: "Not authorized, user not found" });
 
-      console.log("👉 Decoded Payload:", decoded);
-
-      req.user = decoded;
+      req.user = rows[0]; // includes userRole
       return next();
-    } catch (error) {
-      console.error("JWT verify error:", error.message);
-      return res.status(401).json({ message: "Not authorized, token failed" });
     }
-  }
-
-  if (!token) {
     return res.status(401).json({ message: "Not authorized, no token" });
+  } catch (err) {
+    console.error("Auth middleware error:", err);
+    return res.status(401).json({ message: "Not authorized, token failed" });
   }
 };
 
-export default protect;
+export default protect;

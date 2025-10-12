@@ -25,13 +25,24 @@ import dotenv from "dotenv";
 import cors from "cors";
 import db from "./config/db.js";
 import authRoutes from "./routes/auth.js";
-import { protect} from "./middleware/authMiddleware.js";
+import  protect from "./middleware/authMiddleware.js";
+import jobsRoutes from "./routes/jobs.js";
+import applicationsRoutes from "./routes/applications.js";
+import notificationsRoutes from "./routes/notifications.js";
+
+// app.use("/api/jobs", jobsRoutes);
+// app.use("/api/applications", applicationsRoutes);
+// app.use("/api/notifications", notificationsRoutes);
 
 dotenv.config();
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/jobs", jobsRoutes);
+app.use("/api/applications", applicationsRoutes);
+app.use("/api/notifications", notificationsRoutes);
 
 // Root test
 app.get("/", (req, res) => res.send("Hireon backend running..."));
